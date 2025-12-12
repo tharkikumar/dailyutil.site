@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sleep Cycle Alarm — DailyUtil</title>
+  <meta name="description" content="Find ideal bedtimes for a full sleep cycle. Free sleep calculator.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-moon"></i> Sleep Cycle Alarm</h1>
+      <p>Find ideal bedtimes for full 90-minute sleep cycles to wake up refreshed.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="wakeTime">Desired Wake-Up Time</label>
+      <input type="time" id="wakeTime" class="form-control" value="07:00">
+    </div>
+
+    <button class="btn" onclick="calculateSleepTimes()">Get Bedtimes</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateSleepTimes() {
+      const wake = document.getElementById('wakeTime').value;
+      const r = document.getElementById('result');
+      if (!wake) { r.innerHTML = `<div class="result-box error">⚠️ Please select a wake-up time.</div>`; return; }
+      const [hours, minutes] = wake.split(':').map(Number);
+      const now = new Date();
+      now.setHours(hours, minutes, 0, 0);
+      let html = '<div class="result-box"><h3>Ideal Bedtimes for Full Sleep Cycles (90 min each):</h3><ul style="text-align:left;margin-top:12px;padding-left:20px;">';
+      for (let i = 1; i <= 6; i++) {
+        const bedtime = new Date(now.getTime() - (90 * 60000 * i));
+        html += `<li>Sleep at <strong>${bedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong> for ${i} cycle${i !== 1 ? 's' : ''}</li>`;
+      }
+      html += '</ul></div>';
+      r.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
