@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Citation Generator (APA/MLA) — DailyUtil</title>
+  <meta name="description" content="Generate APA or MLA citations instantly. Free for students and researchers.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-quote-right"></i> Citation Generator</h1>
+      <p>Generate APA 7th or MLA citations for websites and books instantly.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="citeType">Source Type</label>
+      <select id="citeType" class="form-control">
+        <option value="website">Website</option>
+        <option value="book">Book</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="citeAuthor">Author (Last, First)</label>
+      <input type="text" id="citeAuthor" class="form-control" placeholder="Smith, John">
+    </div>
+    <div class="form-group">
+      <label for="citeTitle">Title of Work</label>
+      <input type="text" id="citeTitle" class="form-control" placeholder="The Art of Productivity">
+    </div>
+    <div class="form-group">
+      <label for="citeSite">Website Name or Publisher</label>
+      <input type="text" id="citeSite" class="form-control" placeholder="Harvard University Press">
+    </div>
+    <div class="form-group">
+      <label for="citeDate">Publication Date</label>
+      <input type="date" id="citeDate" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="citeUrl">URL (for websites)</label>
+      <input type="url" id="citeUrl" class="form-control" placeholder="https://example.com/article">
+    </div>
+
+    <button class="btn" onclick="generateCitation()">Generate Citation</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function generateCitation() {
+      const type = document.getElementById('citeType').value;
+      const author = (document.getElementById('citeAuthor').value || 'Author, A.').trim();
+      const title = (document.getElementById('citeTitle').value || 'Title of work').trim();
+      const site = (document.getElementById('citeSite').value || 'Publisher').trim();
+      const dateInput = document.getElementById('citeDate').value;
+      const date = dateInput ? new Date(dateInput).getFullYear() : 'n.d.';
+      const url = document.getElementById('citeUrl').value;
+      let citation = '';
+      if (type === 'website') {
+        citation = `${author} (${date}). <em>${title}</em>. ${site}. ${url}`;
+      } else {
+        citation = `${author} (${date}). <em>${title}</em>. ${site}.`;
+      }
+      document.getElementById('result').innerHTML = `<div class="result-box success"><h3>Your Citation (APA 7th):</h3><blockquote style="margin:12px 0;font-style:italic;">${citation}</blockquote></div>`;
+    }
+  </script>
+</body>
+</html>
