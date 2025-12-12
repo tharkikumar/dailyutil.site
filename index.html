@@ -112,25 +112,44 @@
       home: '#8b5cf6' // Purple for Home & Life
     };
 
-    const grid = document.getElementById('toolsGrid');
-    tools.forEach(tool => {
-      const color = categoryColors[tool.category] || '#6c757d';
-      const card = document.createElement('a');
-      card.href = `/tools/${tool.id}.html`;
-      card.className = 'tool-card';
-      card.dataset.category = tool.category;
-      card.innerHTML = `
-        <div class="tool-icon" style="color:${color};">
-          <i class="fas fa-${getIcon(tool.id)}"></i>
-        </div>
-        <h3>${tool.name}</h3>
+    // Render tools as a categorized list
+const listContainer = document.getElementById('toolsList');
+const categories = ['productivity', 'privacy', 'documents', 'study', 'health', 'home'];
+const categoryNames = {
+  productivity: 'Productivity',
+  privacy: 'Privacy',
+  documents: 'Documents',
+  study: 'Study',
+  health: 'Health',
+  home: 'Home & Life'
+};
+
+categories.forEach(cat => {
+  const categoryTools = tools.filter(tool => tool.category === cat);
+  if (categoryTools.length === 0) return;
+  
+  const section = document.createElement('div');
+  section.innerHTML = `<h3 class="category-title">${categoryNames[cat]}</h3>`;
+  
+  categoryTools.forEach(tool => {
+    const item = document.createElement('a');
+    item.href = `/tools/${tool.id}.html`;
+    item.className = 'tool-list-item';
+    item.dataset.category = tool.category;
+    item.innerHTML = `
+      <div class="tool-list-icon">
+        <i class="fas fa-${getIcon(tool.id)}"></i>
+      </div>
+      <div class="tool-list-content">
+        <h4>${tool.name}</h4>
         <p>${tool.desc}</p>
-        <span class="category-badge" style="background:${color}20; color:${color};">
-          ${tool.category.charAt(0).toUpperCase() + tool.category.slice(1)}
-        </span>
-      `;
-      grid.appendChild(card);
-    });
+      </div>
+    `;
+    section.appendChild(item);
+  });
+  
+  listContainer.appendChild(section);
+});
 
     function getIcon(id) {
       const icons = {
