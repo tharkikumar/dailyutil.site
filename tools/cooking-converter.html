@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cooking Unit Converter — Cups to Grams | DailyUtil</title>
+  <meta name="description" content="Convert cups to grams, tbsp to ml, and more — with ingredient-specific accuracy. Free, private, no login.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-utensils"></i> Cooking Unit Converter</h1>
+      <p>Convert cups to grams, tablespoons to milliliters, and more — with ingredient-specific accuracy.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="ingredient">Ingredient</label>
+      <select id="ingredient" class="form-control">
+        <option value="flour">All-Purpose Flour</option>
+        <option value="sugar">Granulated Sugar</option>
+        <option value="butter">Butter</option>
+        <option value="water">Water</option>
+        <option value="milk">Milk</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="cookValue">Value</label>
+      <input type="number" id="cookValue" class="form-control" value="1" min="0" step="0.1">
+    </div>
+    <div class="form-group">
+      <label>From</label>
+      <select id="fromUnit" class="form-control">
+        <option value="cup">Cup</option>
+        <option value="tbsp">Tablespoon</option>
+        <option value="tsp">Teaspoon</option>
+        <option value="g">Gram</option>
+        <option value="ml">Milliliter</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>To</label>
+      <select id="toUnit" class="form-control">
+        <option value="g">Gram</option>
+        <option value="ml">Milliliter</option>
+        <option value="cup">Cup</option>
+        <option value="tbsp">Tablespoon</option>
+        <option value="tsp">Teaspoon</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertCooking()">Convert</button>
+    <div id="cookResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Why Accurate Cooking Conversions Matter</h3>
+      <p>Baking and cooking rely on precise measurements — and cups are not universal. A cup of flour weighs 120g, but a cup of sugar is 200g. Using the wrong conversion leads to dry cakes, dense bread, or failed recipes. DailyUtil’s Cooking Unit Converter uses ingredient-specific densities to give you accurate grams, milliliters, or volume measures — all in your browser, with no data collection.</p>
+      <p>This tool is essential for home bakers, meal preppers, and anyone adapting recipes from American (cups) to metric (grams) systems. Whether you're making cookies for your kids or hosting a dinner party, this free utility ensures your dish turns out perfectly — every time.</p>
+      <p>Free, ad-light, and privacy-respecting, our converter requires no sign-up and works instantly. For premium users, we offer an expanded ingredient library (honey, oats, cocoa) and the ability to save recipes as printable PDFs — because great cooking should be stress-free.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const densities = {
+      flour: { cup: 120, tbsp: 7.5, tsp: 2.5, g: 1, ml: 1.2 },
+      sugar: { cup: 200, tbsp: 12.5, tsp: 4.2, g: 1, ml: 1.2 },
+      butter: { cup: 227, tbsp: 14.2, tsp: 4.7, g: 1, ml: 1.1 },
+      water: { cup: 240, tbsp: 15, tsp: 5, g: 1, ml: 1 },
+      milk: { cup: 245, tbsp: 15.3, tsp: 5.1, g: 1, ml: 1 }
+    };
+
+    function convertCooking() {
+      const ing = document.getElementById('ingredient').value;
+      const val = parseFloat(document.getElementById('cookValue').value);
+      const from = document.getElementById('fromUnit').value;
+      const to = document.getElementById('toUnit').value;
+      const result = document.getElementById('cookResult');
+      
+      if (isNaN(val)) { result.innerHTML = `<div class="result-box error">⚠️ Enter a valid number</div>`; return; }
+      
+      const base = val / densities[ing][from];
+      const output = base * densities[ing][to];
+      result.innerHTML = `<div class="result-box success"><strong>${val} ${from}</strong> = <strong>${output.toFixed(2)} ${to}</strong></div>`;
+    }
+  </script>
+</body>
+</html>
