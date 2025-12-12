@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DailyUtil — Free Daily Tools for Work, Privacy & Life</title>
+  <meta name="description" content="25+ free, private, no-login tools: PDF converter, password checker, site down tester, water calculator & more.">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#4a6cf7">
+  <style>
+    :root { --primary: #4a6cf7; --bg: #f9fafb; --card: #ffffff; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif; }
+    body { background: var(--bg); color: #111; padding:20px; max-width:1200px; margin:0 auto; }
+    header { text-align:center; margin:30px 0; }
+    h1 { font-size:2.2rem; margin:10px 0; color:var(--primary); }
+    .tagline { color:#555; max-width:600px; margin:0 auto 20px; }
+    .categories { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:20px 0; }
+    .cat-btn { background:#eef2ff; color:var(--primary); border:none; padding:6px 12px; border-radius:20px; cursor:pointer; }
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px; margin:30px 0; }
+    .tool-card { background:var(--card); border-radius:10px; padding:15px; text-align:center; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.05); transition:transform 0.2s; }
+    .tool-card:hover { transform: translateY(-3px); border:1px solid #ddd; }
+    .tool { display:none; }
+    .active { display:block; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .adsense-placeholder { background:#f0f5ff; border:1px dashed #ccc; padding:10px; margin:20px 0; text-align:center; color:#666; }
+    footer { text-align:center; margin-top:50px; padding-top:20px; border-top:1px solid #eee; color:#666; }
+    footer a { color:var(--primary); margin:0 8px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>DailyUtil</h1>
+    <p class="tagline">25+ free, private, no-login tools for work, study, health & daily life.</p>
+    <div class="categories">
+      <button class="cat-btn" onclick="filterCategory('all')">All</button>
+      <button class="cat-btn" onclick="filterCategory('productivity')">Productivity</button>
+      <button class="cat-btn" onclick="filterCategory('privacy')">Privacy</button>
+      <button class="cat-btn" onclick="filterCategory('documents')">Documents</button>
+      <button class="cat-btn" onclick="filterCategory('study')">Study</button>
+      <button class="cat-btn" onclick="filterCategory('health')">Health</button>
+    </div>
+  </header>
+
+  <!-- Tool Launcher Grid -->
+  <div class="tools-grid" id="toolsGrid"></div>
+
+  <!-- Tool Containers -->
+  <div id="toolContainer"></div>
+
+  <!-- AdSense will go here (only on tool result pages in real version) -->
+  <div class="adsense-placeholder">
+    [AdSense Ad Unit – Place above results in production]
+  </div>
+
+  <footer>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="https://github.com/yourname/dailyutil" target="_blank">GitHub</a>
+    <p>© 2025 DailyUtil.site – Free tools. Zero tracking.</p>
+  </footer>
+
+  <script>
+    // Tool definitions
+    const tools = [
+      // Productivity
+      { id: 'meeting-cost', name: 'Meeting Cost', category: 'productivity', desc: 'How much your meeting costs' },
+      { id: 'timezone-conv', name: 'Time Zone Converter', category: 'productivity', desc: 'For remote teams' },
+      { id: 'task-prioritizer', name: 'Task Prioritizer', category: 'productivity', desc: 'Eisenhower matrix' },
+      { id: 'read-time', name: 'Read Time Estimator', category: 'productivity', desc: 'For any text' },
+      { id: 'focus-timer', name: 'Focus Timer', category: 'productivity', desc: 'Pomodoro coach' },
+
+      // Privacy
+      { id: 'password-check', name: 'Password Checker', category: 'privacy', desc: 'Leak + strength' },
+      { id: 'email-leak', name: 'Email Leak Check', category: 'privacy', desc: 'See if exposed' },
+      { id: 'policy-sum', name: 'Policy Summarizer', category: 'privacy', desc: 'Privacy policies' },
+      { id: 'cookie-sim', name: 'Cookie Simulator', category: 'privacy', desc: 'What sites track' },
+      { id: 'encrypted-note', name: 'Encrypted Note', category: 'privacy', desc: 'Client-side only' },
+
+      // Documents
+      { id: 'pdf-word', name: 'PDF to Word', category: 'documents', desc: 'No upload needed' },
+      { id: 'image-ocr', name: 'Image to Text', category: 'documents', desc: 'Extract text' },
+      { id: 'pdf-compress', name: 'PDF Compressor', category: 'documents', desc: 'Reduce file size' },
+      { id: 'merge-pdfs', name: 'Merge PDFs', category: 'documents', desc: 'Drag & drop' },
+      { id: 'word-counter', name: 'Word Counter', category: 'documents', desc: 'Readability score' },
+
+      // Study
+      { id: 'exam-predictor', name: 'Exam Predictor', category: 'study', desc: 'Will you pass?' },
+      { id: 'citation-gen', name: 'Citation Generator', category: 'study', desc: 'APA / MLA' },
+      { id: 'study-planner', name: 'Study Planner', category: 'study', desc: 'Daily goals' },
+      { id: 'plag-check', name: 'Plagiarism Checker', category: 'study', desc: 'Text similarity' },
+      { id: 'deadline-tracker', name: 'Deadline Tracker', category: 'study', desc: 'No login' },
+
+      // Health
+      { id: 'water-calculator', name: 'Water Calculator', category: 'health', desc: 'Daily intake' },
+      { id: 'bmi-calculator', name: 'BMI Calculator', category: 'health', desc: 'Body metrics' },
+      { id: 'sleep-alarm', name: 'Sleep Alarm', category: 'health', desc: 'Wake up fresh' },
+      { id: 'caffeine-check', name: 'Caffeine Checker', category: 'health', desc: 'Safe limits' },
+      { id: 'step-goal', name: 'Step Goal', category: 'health', desc: 'By height/age' }
+    ];
+
+    // Render tool grid
+    const grid = document.getElementById('toolsGrid');
+    tools.forEach(tool => {
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.innerHTML = `<strong>${tool.name}</strong><br><small>${tool.desc}</small>`;
+      card.onclick = () => showTool(tool.id);
+      card.dataset.category = tool.category;
+      grid.appendChild(card);
+    });
+
+    // Show tool UI (placeholder for demo)
+    function showTool(toolId) {
+      document.getElementById('toolContainer').innerHTML = `
+        <div class="active">
+          <h2>${tools.find(t => t.id === toolId).name}</h2>
+          <p>✅ This is a working demo. In the full version, this will be a real tool.</p>
+          <p>🛠️ Full code for all 25 tools (PDF converter, password checker, etc.) will be provided next.</p>
+          <button onclick="hideTool()" style="margin-top:15px;background:var(--primary);color:white;border:none;padding:8px 16px;border-radius:6px;">← Back to Tools</button>
+        </div>
+      `;
+      window.scrollTo(0, document.getElementById('toolContainer').offsetTop - 20);
+    }
+
+    function hideTool() {
+      document.getElementById('toolContainer').innerHTML = '';
+    }
+
+    // Category filter
+    function filterCategory(cat) {
+      document.querySelectorAll('.tool-card').forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Register service worker (for PWA)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(console.warn);
+      });
+    }
+  </script>
+</body>
+</html>
