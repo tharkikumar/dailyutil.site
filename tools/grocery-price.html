@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grocery Price per Unit — Compare Deals | DailyUtil</title>
+  <meta name="description" content="Compare unit prices of grocery items to find the best deal. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-shopping-basket"></i> Grocery Price per Unit</h1>
+      <p>Compare unit prices of grocery items to find the best deal — per kg, liter, or ounce.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="item1Price">Item 1 Price ($)</label>
+      <input type="number" id="item1Price" class="form-control" value="2.50" min="0" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="item1Qty">Item 1 Quantity</label>
+      <input type="number" id="item1Qty" class="form-control" value="500" min="0.1" step="0.1">
+    </div>
+    <div class="form-group">
+      <label>Item 1 Unit</label>
+      <select id="item1Unit" class="form-control">
+        <option value="g">Grams</option>
+        <option value="kg">Kilograms</option>
+        <option value="ml">Milliliters</option>
+        <option value="l">Liters</option>
+        <option value="oz">Ounces</option>
+      </select>
+    </div>
+
+    <div style="margin:20px 0; text-align:center; font-weight:bold;">VS</div>
+
+    <div class="form-group">
+      <label for="item2Price">Item 2 Price ($)</label>
+      <input type="number" id="item2Price" class="form-control" value="4.00" min="0" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="item2Qty">Item 2 Quantity</label>
+      <input type="number" id="item2Qty" class="form-control" value="1000" min="0.1" step="0.1">
+    </div>
+    <div class="form-group">
+      <label>Item 2 Unit</label>
+      <select id="item2Unit" class="form-control">
+        <option value="g">Grams</option>
+        <option value="kg">Kilograms</option>
+        <option value="ml">Milliliters</option>
+        <option value="l">Liters</option>
+        <option value="oz">Ounces</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="compareGrocery()">Compare Prices</button>
+    <div id="groceryResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Beat Inflation at the Grocery Store</h3>
+      <p>With rising food costs, comparing unit prices is the smartest way to stretch your budget. DailyUtil’s Grocery Price per Unit Calculator instantly shows you which item gives more value — whether you're comparing 500g vs 1kg bags of rice or 1L vs 2L bottles of oil.</p>
+      <p>Enter price and quantity for two items, select units (grams, liters, ounces, etc.), and get a clear winner. All calculations happen in your browser — no purchase data is saved or shared, so you can shop with confidence.</p>
+      <p>Free and private, this tool requires no sign-up. Premium users unlock "Smart Shopper" mode — use your phone camera to scan receipts (client-side AI) and track the best prices over time — because saving money should be effortless.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const toGrams = { g: 1, kg: 1000, oz: 28.35 };
+    const toMl = { ml: 1, l: 1000, oz: 29.574 };
+
+    function getBaseUnit(qty, unit) {
+      if (toGrams[unit]) return qty * toGrams[unit]; // weight
+      if (toMl[unit]) return qty * toMl[unit];       // volume
+      return qty;
+    }
+
+    function compareGrocery() {
+      const p1 = parseFloat(document.getElementById('item1Price').value);
+      const q1 = parseFloat(document.getElementById('item1Qty').value);
+      const u1 = document.getElementById('item1Unit').value;
+      const p2 = parseFloat(document.getElementById('item2Price').value);
+      const q2 = parseFloat(document.getElementById('item2Qty').value);
+      const u2 = document.getElementById('item2Unit').value;
+      const result = document.getElementById('groceryResult');
+      
+      if (isNaN(p1) || isNaN(q1) || isNaN(p2) || isNaN(q2)) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter valid numbers</div>`;
+        return;
+      }
+      
+      const base1 = getBaseUnit(q1, u1);
+      const base2 = getBaseUnit(q2, u2);
+      const unitPrice1 = p1 / base1;
+      const unitPrice2 = p2 / base2;
+      
+      let better = unitPrice1 < unitPrice2 ? 'Item 1' : 'Item 2';
+      result.innerHTML = `<div class="result-box success">
+        <strong>Item 1:</strong> $${unitPrice1.toFixed(4)} per base unit<br>
+        <strong>Item 2:</strong> $${unitPrice2.toFixed(4)} per base unit<br>
+        <strong>${better} is cheaper!</strong>
+      </div>`;
+    }
+  </script>
+</body>
+</html>
