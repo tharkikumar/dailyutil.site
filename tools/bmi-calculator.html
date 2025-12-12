@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BMI Calculator — DailyUtil</title>
+  <meta name="description" content="Calculate your Body Mass Index (BMI) and health category. Free health tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-weight"></i> BMI Calculator</h1>
+      <p>Calculate your Body Mass Index (BMI) and see your health category.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="heightCm">Height (cm)</label>
+      <input type="number" id="heightCm" class="form-control" value="170" min="50" max="300">
+    </div>
+    <div class="form-group">
+      <label for="weightKg">Weight (kg)</label>
+      <input type="number" id="weightKg" class="form-control" value="65" min="10" max="500">
+    </div>
+
+    <button class="btn" onclick="calculateBMI()">Calculate BMI</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateBMI() {
+      const h = parseFloat(document.getElementById('heightCm').value);
+      const w = parseFloat(document.getElementById('weightKg').value);
+      const r = document.getElementById('result');
+      if (h > 50 && h < 300 && w > 10 && w < 500) {
+        const bmi = (w / ((h/100) ** 2)).toFixed(1);
+        let category = 'Underweight';
+        let color = '#ed8936';
+        if (bmi < 18.5) {
+          category = 'Underweight';
+          color = '#ed8936';
+        } else if (bmi >= 18.5 && bmi < 25) {
+          category = 'Normal weight';
+          color = '#48bb78';
+        } else if (bmi >= 25 && bmi < 30) {
+          category = 'Overweight';
+          color = '#ed8936';
+        } else {
+          category = 'Obese';
+          color = '#e53e3e';
+        }
+        r.innerHTML = `<div class="result-box" style="border-left-color:${color};">
+          Your BMI: <strong>${bmi}</strong><br>
+          Category: <strong style="color:${color};">${category}</strong>
+        </div>`;
+      } else {
+        r.innerHTML = `<div class="result-box error">⚠️ Please enter valid height (50-300 cm) and weight (10-500 kg).</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
