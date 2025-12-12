@@ -194,16 +194,28 @@ categories.forEach(cat => {
     }
 
     // ✅ FILTERING LOGIC (WORKS FOR 'home')
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.category;
-        document.querySelectorAll('.tool-card').forEach(card => {
-          card.style.display = (cat === 'all' || card.dataset.category === cat) ? 'block' : 'none';
-        });
-      });
+    // ✅ CATEGORY FILTERING FOR LIST LAYOUT
+document.querySelectorAll('.cat-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Update active button
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    const selectedCategory = btn.dataset.category;
+    
+    // Show/hide tool list items
+    document.querySelectorAll('.tool-list-item').forEach(item => {
+      item.style.display = (selectedCategory === 'all' || item.dataset.category === selectedCategory) ? 'flex' : 'none';
     });
+    
+    // Show/hide category sections (titles + tools)
+    document.querySelectorAll('.category-title').forEach(title => {
+      const section = title.parentElement;
+      const visibleItems = section.querySelectorAll('.tool-list-item:not([style*="none"])');
+      section.style.display = visibleItems.length ? 'block' : 'none';
+    });
+  });
+});
   </script>
 </body>
 </html>
