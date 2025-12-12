@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Prioritizer (Eisenhower Matrix) — DailyUtil</title>
+  <meta name="description" content="Organize your tasks using the Eisenhower Matrix. Free, no login required.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-tasks"></i> Task Prioritizer</h1>
+      <p>Organize your tasks using the Eisenhower Matrix: Urgent vs Important.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="taskInput">Your Tasks (one per line)</label>
+      <textarea id="taskInput" class="form-control" placeholder="Write report&#10;Call client&#10;Review design"></textarea>
+    </div>
+
+    <button class="btn" onclick="prioritizeTasks()">Prioritize Tasks</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function prioritizeTasks() {
+      const tasks = document.getElementById('taskInput').value.split('\n').filter(t => t.trim());
+      const result = document.getElementById('result');
+      if (tasks.length === 0) { result.innerHTML = `<div class="result-box error">⚠️ Please enter at least one task.</div>`; return; }
+      const urgent = tasks.slice(0, Math.ceil(tasks.length/3));
+      const important = tasks.slice(Math.ceil(tasks.length/3), Math.ceil(2*tasks.length/3));
+      const neither = tasks.slice(Math.ceil(2*tasks.length/3));
+      let html = '<div class="result-box"><h3 style="margin-bottom:12px;">Your Prioritized Tasks:</h3>';
+      if (urgent.length) html += `<h4 style="color:#e53e3e;">🔥 Urgent & Important</h4><ul>${urgent.map(t => `<li>${t}</li>`).join('')}</ul>`;
+      if (important.length) html += `<h4 style="color:#d69e2e;">📅 Important, Not Urgent</h4><ul>${important.map(t => `<li>${t}</li>`).join('')}</ul>`;
+      if (neither.length) html += `<h4 style="color:#48bb78;">🗑️ Delegate or Eliminate</h4><ul>${neither.map(t => `<li>${t}</li>`).join('')}</ul>`;
+      html += '</div>';
+      result.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
