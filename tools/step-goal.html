@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Step Goal Calculator — DailyUtil</title>
+  <meta name="description" content="Calculate your daily step goal based on height and fitness level.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-shoe-prints"></i> Step Goal Calculator</h1>
+      <p>Calculate your ideal daily step goal based on your height and fitness level.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="heightCm">Your Height (cm)</label>
+      <input type="number" id="heightCm" class="form-control" value="170" min="100" max="250">
+    </div>
+    <div class="form-group">
+      <label for="fitnessLevel">Fitness Level</label>
+      <select id="fitnessLevel" class="form-control">
+        <option value="basic">Basic (30 min walk/day)</option>
+        <option value="moderate" selected>Moderate (regular exercise)</option>
+        <option value="active">Active (daily intense activity)</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="calculateSteps()">Calculate Goal</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateSteps() {
+      const height = parseFloat(document.getElementById('heightCm').value);
+      const level = document.getElementById('fitnessLevel').value;
+      if (height < 100) { 
+        document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Please enter a valid height (100-250 cm).</div>`; 
+        return; 
+      }
+      const base = 10000;
+      const factor = level === 'basic' ? 0.8 : level === 'active' ? 1.2 : 1.0;
+      const goal = Math.round(base * factor);
+      document.getElementById('result').innerHTML = `<div class="result-box success">
+        👟 Your Daily Step Goal:<br>
+        <strong>${goal.toLocaleString()} steps</strong> per day.
+      </div>`;
+    }
+  </script>
+</body>
+</html>
