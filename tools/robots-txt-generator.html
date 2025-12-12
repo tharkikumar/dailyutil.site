@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robots.txt Generator — DailyUtil</title>
+  <meta name="description" content="Generate a robots.txt file for your website. Free SEO tool, no signup.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-robot"></i> Robots.txt Generator</h1>
+      <p>Generate a robots.txt file to control how search engines crawl your website.</p>
+    </div>
+
+    <div class="form-group">
+      <label><input type="checkbox" id="allowAll"> Allow all crawlers to access all pages</label>
+    </div>
+    <div class="form-group">
+      <label><input type="checkbox" id="disallowAdmin"> Disallow access to /admin/ directory</label>
+    </div>
+    <div class="form-group">
+      <label><input type="checkbox" id="disallowWp"> Disallow WordPress system folders</label>
+    </div>
+    <div class="form-group">
+      <label for="sitemapUrl">Sitemap URL (optional)</label>
+      <input type="url" id="sitemapUrl" class="form-control" placeholder="https://yoursite.com/sitemap.xml">
+    </div>
+
+    <button class="btn" onclick="generateRobots()">Generate robots.txt</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function generateRobots() {
+      let lines = ['User-agent: *'];
+      const allowAll = document.getElementById('allowAll').checked;
+      const disallowAdmin = document.getElementById('disallowAdmin').checked;
+      const disallowWp = document.getElementById('disallowWp').checked;
+      const sitemap = document.getElementById('sitemapUrl').value.trim();
+
+      if (allowAll) lines.push('Allow: /');
+      if (disallowAdmin) lines.push('Disallow: /admin/');
+      if (disallowWp) {
+        lines.push('Disallow: /wp-admin/');
+        lines.push('Disallow: /wp-includes/');
+      }
+      if (sitemap) lines.push(`Sitemap: ${sitemap}`);
+
+      document.getElementById('result').innerHTML = `
+        <div class="result-box">
+          <h3>Your robots.txt file:</h3>
+          <pre style="background:#f5f5f5;padding:12px;margin:12px 0;overflow-x:auto;">${lines.join('\n')}</pre>
+          <p>✅ Copy this content and save it as <code>robots.txt</code> in your website root directory.</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
