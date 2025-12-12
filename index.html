@@ -16,7 +16,6 @@
     <div class="container">
       <h1><i class="fas fa-toolbox"></i> DailyUtil</h1>
       <p class="tagline">25+ free, private, no-login tools for productivity, privacy, documents, study & health.</p>
-      
     </div>
   </header>
 
@@ -32,15 +31,16 @@
     </div>
 
     <div class="tools-grid" id="toolsGrid"></div>
+    
     <div class="vision">
-        <h2>Our Vision</h2>
-        <p>
-          In a world of bloated apps and data-hungry services, DailyUtil offers a better way: 
-          <strong>simple, private, and instantly useful tools</strong> that work in your browser — 
-          no signups, no uploads, no tracking. 
-          We believe everyone deserves access to powerful utilities without sacrificing privacy or simplicity.
-        </p>
-      </div>
+      <h2>Our Vision</h2>
+      <p>
+        In a world of bloated apps and data-hungry services, DailyUtil offers a better way: 
+        <strong>simple, private, and instantly useful tools</strong> that work in your browser — 
+        no signups, no uploads, no tracking. 
+        We believe everyone deserves access to powerful utilities without sacrificing privacy or simplicity.
+      </p>
+    </div>
   </main>
 
   <footer>
@@ -54,54 +54,62 @@
 
   <script>
     const tools = [
+      // Productivity
       { id: 'is-site-down', name: 'Is Site Down?', category: 'productivity', desc: 'Check if a website is down for everyone or just you.' },
       { id: 'meeting-cost', name: 'Meeting Cost', category: 'productivity', desc: 'Calculate how much your team meeting really costs.' },
       { id: 'timezone-conv', name: 'Time Zone Converter', category: 'productivity', desc: 'Convert time between time zones.' },
       { id: 'task-prioritizer', name: 'Task Prioritizer', category: 'productivity', desc: 'Organize tasks using the Eisenhower Matrix.' },
       { id: 'read-time', name: 'Read Time Estimator', category: 'productivity', desc: 'Estimate reading time for any text.' },
       
+      // Privacy
       { id: 'password-checker', name: 'Password Checker', category: 'privacy', desc: 'Check password strength and breach status.' },
       { id: 'email-leak', name: 'Email Leak Check', category: 'privacy', desc: 'See if your email was exposed in data breaches.' },
       { id: 'cookie-simulator', name: 'Cookie Simulator', category: 'privacy', desc: 'See what websites typically track about you.' },
       { id: 'color-contrast', name: 'Color Contrast', category: 'privacy', desc: 'Check accessibility of text/background colors.' },
       { id: 'robots-txt', name: 'Robots.txt', category: 'privacy', desc: 'Generate a robots.txt file for your website.' },
       
+      // Documents
       { id: 'pdf-to-text', name: 'PDF to Text', category: 'documents', desc: 'Extract text from PDF files (client-side).' },
       { id: 'base64-tool', name: 'Base64 Tool', category: 'documents', desc: 'Encode or decode Base64 strings.' },
       { id: 'json-formatter', name: 'JSON Formatter', category: 'documents', desc: 'Validate and format JSON data.' },
       { id: 'word-counter', name: 'Word Counter', category: 'documents', desc: 'Count words, characters, and readability score.' },
       { id: 'qr-code', name: 'QR Code', category: 'documents', desc: 'Generate QR codes with no watermark.' },
       
+      // Study
       { id: 'exam-predictor', name: 'Exam Predictor', category: 'study', desc: 'Predict if you’ll pass based on your score.' },
       { id: 'citation-generator', name: 'Citation Generator', category: 'study', desc: 'Generate APA/MLA citations instantly.' },
       { id: 'study-planner', name: 'Study Planner', category: 'study', desc: 'Create a daily study plan before exams.' },
       { id: 'plagiarism-checker', name: 'Plagiarism Checker', category: 'study', desc: 'Check text similarity (local only).' },
       { id: 'deadline-tracker', name: 'Deadline Tracker', category: 'study', desc: 'Track assignment deadlines with countdown.' },
       
+      // Health
       { id: 'water-calculator', name: 'Water Calculator', category: 'health', desc: 'Calculate your ideal daily water intake.' },
       { id: 'bmi-calculator', name: 'BMI Calculator', category: 'health', desc: 'Check your Body Mass Index and category.' },
       { id: 'sleep-alarm', name: 'Sleep Alarm', category: 'health', desc: 'Find ideal bedtimes for a full sleep cycle.' },
       { id: 'caffeine-checker', name: 'Caffeine Checker', category: 'health', desc: 'Check if your caffeine intake is safe.' },
-      { id: 'step-goal', name: 'Step Goal', category: 'health', desc: 'Calculate your daily step goal by height.' }
-
-    //  { id: 'cooking-converter', name: 'Cooking Unit Converter', category: 'home', desc: 'Cups to grams, tbsp to ml.' },
-//{ id: 'recipe-scaler', name: 'Recipe Scaler', category: 'home', desc: 'Scale recipes for any serving size.', icon: 'fas fa-bowl-food' },
-//{ id: 'oven-temperature', name: 'Oven Temperature', category: 'home', desc: '°F, °C, Gas Mark converter.', icon: 'fas fa-fire' },
-//{ id: 'baby-formula', name: 'Baby Formula Converter', category: 'home', desc: 'Scoops to ml/oz.', icon: 'fas fa-baby' },
-//{ id: 'electricity-cost', name: 'Electricity Cost', category: 'home', desc: 'Calculate appliance running cost.', icon: 'fas fa-bolt' },
-//{ id: 'laundry-load', name: 'Laundry Load', category: 'home', desc: 'kg to item count.', icon: 'fas fa-tshirt' },
-//{ id: 'paint-coverage', name: 'Paint Coverage', category: 'home', desc: 'Wall area to liters needed.', icon: 'fas fa-paint-roller' },
-//{ id: 'grocery-price', name: 'Grocery Price', category: 'home', desc: 'Compare unit prices.', icon: 'fas fa-shopping-basket' },
-//{ id: 'shoe-size', name: 'Shoe Size Converter', category: 'home', desc: 'US, EU, UK sizes.', icon: 'fas fa-shoe-prints' },
-//{ id: 'gpa-converter', name: 'GPA Converter', category: 'home', desc: 'Global grading scales.', icon: 'fas fa-graduation-cap' }
+      { id: 'step-goal', name: 'Step Goal', category: 'health', desc: 'Calculate your daily step goal by height.' },
+      
+      // Home & Life (NEW)
+      { id: 'cooking-converter', name: 'Cooking Unit Converter', category: 'home', desc: 'Cups to grams, tbsp to ml.' },
+      { id: 'recipe-scaler', name: 'Recipe Scaler', category: 'home', desc: 'Scale recipes for any serving size.' },
+      { id: 'oven-temperature', name: 'Oven Temperature', category: 'home', desc: '°F, °C, Gas Mark converter.' },
+      { id: 'baby-formula', name: 'Baby Formula Converter', category: 'home', desc: 'Scoops to ml/oz.' },
+      { id: 'electricity-cost', name: 'Electricity Cost', category: 'home', desc: 'Calculate appliance running cost.' },
+      { id: 'laundry-load', name: 'Laundry Load', category: 'home', desc: 'kg to item count.' },
+      { id: 'paint-coverage', name: 'Paint Coverage', category: 'home', desc: 'Wall area to liters needed.' },
+      { id: 'grocery-price', name: 'Grocery Price', category: 'home', desc: 'Compare unit prices.' },
+      { id: 'shoe-size', name: 'Shoe Size Converter', category: 'home', desc: 'US, EU, UK sizes.' },
+      { id: 'gpa-converter', name: 'GPA Converter', category: 'home', desc: 'Global grading scales.' }
     ];
 
+    // ✅ ADDED 'home' COLOR
     const categoryColors = {
       productivity: '#4895ef',
       privacy: '#7209b7',
       documents: '#3a86ff',
       study: '#ff9e00',
-      health: '#06d6a0'
+      health: '#06d6a0',
+      home: '#8b5cf6' // Purple for Home & Life
     };
 
     const grid = document.getElementById('toolsGrid');
@@ -150,12 +158,23 @@
         'bmi-calculator': 'weight',
         'sleep-alarm': 'moon',
         'caffeine-checker': 'coffee',
-        'step-goal': 'shoe-prints'
-        //'cooking-converter':'utensils'
+        'step-goal': 'shoe-prints',
+        // ✅ ADDED HOME ICONS
+        'cooking-converter': 'utensils',
+        'recipe-scaler': 'bowl-food',
+        'oven-temperature': 'fire',
+        'baby-formula': 'baby',
+        'electricity-cost': 'bolt',
+        'laundry-load': 'tshirt',
+        'paint-coverage': 'paint-roller',
+        'grocery-price': 'shopping-basket',
+        'shoe-size': 'shoe-prints',
+        'gpa-converter': 'graduation-cap'
       };
       return icons[id] || 'wrench';
     }
 
+    // ✅ FILTERING LOGIC (WORKS FOR 'home')
     document.querySelectorAll('.cat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
