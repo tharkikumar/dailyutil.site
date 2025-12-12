@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Electricity Cost Calculator — kWh to $ | DailyUtil</title>
+  <meta name="description" content="Calculate your appliance running cost per hour, day, or month. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-bolt"></i> Electricity Cost Calculator</h1>
+      <p>Calculate how much your appliances cost to run — per hour, day, or month.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="watts">Appliance Wattage (W)</label>
+      <input type="number" id="watts" class="form-control" value="1000" min="1">
+    </div>
+    <div class="form-group">
+      <label for="hours">Hours Used Per Day</label>
+      <input type="number" id="hours" class="form-control" value="8" min="0" step="0.5">
+    </div>
+    <div class="form-group">
+      <label for="rate">Electricity Rate ($ per kWh)</label>
+      <input type="number" id="rate" class="form-control" value="0.15" min="0" step="0.01">
+    </div>
+
+    <button class="btn" onclick="calculateElectricity()">Calculate Cost</button>
+    <div id="electricityResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Take Control of Your Energy Bills</h3>
+      <p>With rising electricity costs, understanding your appliance usage is key to saving money. DailyUtil’s Electricity Cost Calculator shows you exactly how much your AC, fridge, or heater costs to run — per hour, day, or month — so you can make informed decisions.</p>
+      <p>Enter your appliance’s wattage (found on the label), daily usage, and local electricity rate to get an instant breakdown. All calculations happen in your browser — no data is stored or shared, ensuring your usage habits stay private.</p>
+      <p>Free and ad-light, this tool works instantly with no sign-up. Premium users unlock "Energy Saver Mode" — compare appliance costs (e.g., "AC vs fan") and get monthly forecasts — because saving money should be simple and private.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateElectricity() {
+      const watts = parseFloat(document.getElementById('watts').value);
+      const hours = parseFloat(document.getElementById('hours').value);
+      const rate = parseFloat(document.getElementById('rate').value);
+      const result = document.getElementById('electricityResult');
+      
+      if (isNaN(watts) || isNaN(hours) || isNaN(rate)) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter valid numbers</div>`;
+        return;
+      }
+      
+      const kWh = (watts / 1000) * hours;
+      const daily = kWh * rate;
+      const monthly = daily * 30;
+      result.innerHTML = `<div class="result-box success">
+        <strong>Hourly:</strong> $${(daily / hours).toFixed(3)}<br>
+        <strong>Daily:</strong> $${daily.toFixed(2)}<br>
+        <strong>Monthly:</strong> $${monthly.toFixed(2)}
+      </div>`;
+    }
+  </script>
+</body>
+</html>
