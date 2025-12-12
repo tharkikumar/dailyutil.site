@@ -103,11 +103,52 @@ body {
   color: white;
 }
 
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
+.tools-list {
+  margin: 30px 0;
+}
+
+.tools-list h3.category-title {
+  margin: 30px 0 15px;
+  color: var(--primary);
+  font-size: 1.4rem;
+  border-bottom: 2px solid var(--light-gray);
+  padding-bottom: 6px;
+}
+
+.tool-list-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  margin: 8px 0;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tool-list-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateX(4px);
+}
+
+.tool-list-icon {
+  font-size: 24px;
+  margin-right: 16px;
+  min-width: 36px;
+  color: var(--primary);
+}
+
+.tool-list-content h4 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.tool-list-content p {
+  margin: 0;
+  color: var(--gray);
+  font-size: 0.95rem;
 }
 
 .tool-card {
