@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Time Zone Converter — DailyUtil</title>
+  <meta name="description" content="Convert time between time zones for remote teams. Free, no signup required.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-globe"></i> Time Zone Converter</h1>
+      <p>Convert time between time zones for remote teams and global collaboration.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="localTime">Your Local Time</label>
+      <input type="datetime-local" id="localTime" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="fromTz">From Time Zone</label>
+      <select id="fromTz" class="form-control">
+        <option value="UTC">UTC</option>
+        <option value="America/New_York">New York</option>
+        <option value="America/Los_Angeles">Los Angeles</option>
+        <option value="Europe/London">London</option>
+        <option value="Europe/Paris">Paris</option>
+        <option value="Asia/Tokyo">Tokyo</option>
+        <option value="Asia/Kolkata" selected>Mumbai</option>
+        <option value="Australia/Sydney">Sydney</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="toTz">To Time Zone</label>
+      <select id="toTz" class="form-control">
+        <option value="UTC">UTC</option>
+        <option value="America/New_York" selected>New York</option>
+        <option value="America/Los_Angeles">Los Angeles</option>
+        <option value="Europe/London">London</option>
+        <option value="Europe/Paris">Paris</option>
+        <option value="Asia/Tokyo">Tokyo</option>
+        <option value="Asia/Kolkata">Mumbai</option>
+        <option value="Australia/Sydney">Sydney</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertTime()">Convert Time</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function convertTime() {
+      try {
+        const localTime = document.getElementById('localTime').value;
+        const fromTz = document.getElementById('fromTz').value;
+        const toTz = document.getElementById('toTz').value;
+        if (!localTime) { document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Please select a time.</div>`; return; }
+        const dt = new Date(localTime);
+        const fromTime = dt.toLocaleString('en-US', { timeZone: fromTz });
+        const toTime = dt.toLocaleString('en-US', { timeZone: toTz });
+        document.getElementById('result').innerHTML = `
+          <div class="result-box">
+            <strong>${fromTz}:</strong> ${fromTime}<br>
+            <strong>${toTz}:</strong> ${toTime}
+          </div>
+        `;
+      } catch (e) {
+        document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Invalid timezone selection.</div>`;
+      }
+    }
+
+    // Set current time by default
+    window.onload = () => {
+      const now = new Date();
+      document.getElementById('localTime').value = now.toISOString().slice(0,16);
+    };
+  </script>
+</body>
+</html>
