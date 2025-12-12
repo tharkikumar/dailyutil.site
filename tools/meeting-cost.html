@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meeting Cost Calculator — DailyUtil</title>
+  <meta name="description" content="Calculate how much your team meeting really costs in salary. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-dollar-sign"></i> Meeting Cost Calculator</h1>
+      <p>Calculate how much your team meeting really costs in combined salary.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="hourlyRate">Average Hourly Salary ($)</label>
+      <input type="number" id="hourlyRate" class="form-control" value="50" min="1">
+    </div>
+    <div class="form-group">
+      <label for="attendees">Number of Attendees</label>
+      <input type="number" id="attendees" class="form-control" value="5" min="1">
+    </div>
+    <div class="form-group">
+      <label for="duration">Meeting Duration (minutes)</label>
+      <input type="number" id="duration" class="form-control" value="60" min="1">
+    </div>
+
+    <button class="btn" onclick="calculateMeetingCost()">Calculate Cost</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateMeetingCost() {
+      const rate = parseFloat(document.getElementById('hourlyRate').value);
+      const attendees = parseInt(document.getElementById('attendees').value);
+      const duration = parseFloat(document.getElementById('duration').value);
+      const result = document.getElementById('result');
+      if (rate > 0 && attendees > 0 && duration > 0) {
+        const cost = ((rate / 60) * duration * attendees).toFixed(2);
+        result.innerHTML = `<div class="result-box success">💰 This meeting costs <strong>$${cost}</strong>.<br>Consider: Could this be an email?</div>`;
+      } else result.innerHTML = `<div class="result-box error">⚠️ Please enter valid numbers.</div>`;
+    }
+  </script>
+</body>
+</html>
