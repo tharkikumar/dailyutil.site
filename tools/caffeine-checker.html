@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Caffeine Intake Checker — DailyUtil</title>
+  <meta name="description" content="Check if your caffeine intake is safe based on your body weight.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-coffee"></i> Caffeine Intake Checker</h1>
+      <p>Check if your daily caffeine intake is within safe limits for your body weight.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="bodyWeight">Your Weight (kg)</label>
+      <input type="number" id="bodyWeight" class="form-control" value="70" min="20" max="200">
+    </div>
+    <div class="form-group">
+      <label>Caffeine Sources Today</label>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <label><input type="checkbox" id="coffee"> ☕ Coffee (95mg per cup)</label>
+        <label><input type="checkbox" id="tea"> 🫖 Tea (45mg per cup)</label>
+        <label><input type="checkbox" id="soda"> 🥤 Soda (40mg per can)</label>
+        <label><input type="checkbox" id="energy"> ⚡ Energy drink (80mg)</label>
+      </div>
+    </div>
+
+    <button class="btn" onclick="checkCaffeine()">Check Safety</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function checkCaffeine() {
+      const weight = parseFloat(document.getElementById('bodyWeight').value);
+      if (weight < 20) { 
+        document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Please enter a valid weight.</div>`; 
+        return; 
+      }
+      const safeLimit = Math.round(weight * 5); // mg
+      let total = 0;
+      if (document.getElementById('coffee').checked) total += 95;
+      if (document.getElementById('tea').checked) total += 45;
+      if (document.getElementById('soda').checked) total += 40;
+      if (document.getElementById('energy').checked) total += 80;
+      const r = document.getElementById('result');
+      if (total <= safeLimit) {
+        r.innerHTML = `<div class="result-box success">
+          ✅ Total caffeine: <strong>${total}mg</strong><br>
+          Safe limit for you: <strong>${safeLimit}mg</strong><br>
+          You're within safe limits!
+        </div>`;
+      } else {
+        r.innerHTML = `<div class="result-box error">
+          ⚠️ Total caffeine: <strong>${total}mg</strong><br>
+          Safe limit for you: <strong>${safeLimit}mg</strong><br>
+          You've exceeded the recommended daily intake.
+        </div>`;
+      }
+    }
+  </script>
+</body>
+</html>
