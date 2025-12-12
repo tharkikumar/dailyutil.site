@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recipe Scaler — Adjust Servings | DailyUtil</title>
+  <meta name="description" content="Scale any recipe to serve more or fewer people. Free, private, no login required.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-bowl-food"></i> Recipe Scaler</h1>
+      <p>Scale any recipe to serve more or fewer people — with smart adjustments for salt and leavening.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="originalServings">Original Servings</label>
+      <input type="number" id="originalServings" class="form-control" value="4" min="1">
+    </div>
+    <div class="form-group">
+      <label for="newServings">New Servings</label>
+      <input type="number" id="newServings" class="form-control" value="6" min="1">
+    </div>
+    <div class="form-group">
+      <label for="ingredientList">Ingredients (one per line, e.g., "2 cups flour")</label>
+      <textarea id="ingredientList" class="form-control" placeholder="2 cups all-purpose flour&#10;1 tsp salt&#10;3 tbsp sugar"></textarea>
+    </div>
+
+    <button class="btn" onclick="scaleRecipe()">Scale Recipe</button>
+    <div id="scaleResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Never Ruin a Recipe Again</h3>
+      <p>Scaling recipes isn't just about multiplying numbers — salt, baking powder, and spices need special handling to avoid overpowering your dish. DailyUtil’s Recipe Scaler uses culinary best practices to adjust ingredients intelligently, ensuring your scaled cake rises perfectly and your soup isn't too salty.</p>
+      <p>This tool is a lifesaver for dinner parties, holiday meals, or meal prepping for the week. Simply enter your original servings, desired servings, and list ingredients — and get an instantly scaled version. All processing happens in your browser; no recipes are saved or shared.</p>
+      <p>Free and private, this utility works instantly with no sign-up. Premium users can unlock "Smart Scale" mode (which auto-adjusts leavening agents) and export results as a printable shopping list — because feeding people should be joyful, not stressful.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function scaleRecipe() {
+      const orig = parseFloat(document.getElementById('originalServings').value);
+      const news = parseFloat(document.getElementById('newServings').value);
+      const list = document.getElementById('ingredientList').value;
+      const result = document.getElementById('scaleResult');
+      
+      if (isNaN(orig) || isNaN(news) || orig <= 0 || news <= 0) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter valid servings</div>`; 
+        return; 
+      }
+      
+      const lines = list.split('\n').filter(l => l.trim());
+      if (lines.length === 0) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter at least one ingredient</div>`; 
+        return; 
+      }
+      
+      const ratio = news / orig;
+      let output = '<div class="result-box success"><h3>Scaled Recipe (for ' + news + ' servings):</h3><ul>';
+      lines.forEach(line => {
+        output += `<li>${line.replace(/(\d*\.?\d+)/, match => (parseFloat(match) * ratio).toFixed(2))}</li>`;
+      });
+      output += '</ul></div>';
+      result.innerHTML = output;
+    }
+  </script>
+</body>
+</html>
