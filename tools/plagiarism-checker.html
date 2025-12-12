@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plagiarism Checker — DailyUtil</title>
+  <meta name="description" content="Check text similarity for plagiarism. Free, local-only comparison.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-file-contract"></i> Plagiarism Checker</h1>
+      <p>Check text similarity between your content and a source (local comparison only).</p>
+    </div>
+
+    <div class="form-group">
+      <label for="plagText1">Your Text</label>
+      <textarea id="plagText1" class="form-control" placeholder="Paste your original content here..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="plagText2">Source Text to Compare</label>
+      <textarea id="plagText2" class="form-control" placeholder="Paste the source you want to check against..."></textarea>
+      <small class="form-text">⚠️ This checks word overlap only (no internet database). For educational use.</small>
+    </div>
+
+    <button class="btn" onclick="checkPlagiarism()">Check Similarity</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function checkPlagiarism() {
+      const text1 = document.getElementById('plagText1').value.toLowerCase();
+      const text2 = document.getElementById('plagText2').value.toLowerCase();
+      const r = document.getElementById('result');
+      if (!text1.trim() || !text2.trim()) { r.innerHTML = `<div class="result-box error">⚠️ Please enter text in both fields.</div>`; return; }
+      const words1 = new Set(text1.match(/\w+/g) || []);
+      const words2 = new Set(text2.match(/\w+/g) || []);
+      const common = [...words1].filter(w => words2.has(w));
+      const similarity = words1.size > 0 ? (common.length / words1.size) * 100 : 0;
+      r.innerHTML = `<div class="result-box ${similarity > 25 ? 'error' : 'success'}">
+        Similarity: <strong>${similarity.toFixed(1)}%</strong><br>
+        ${similarity > 25 ? '⚠️ High similarity detected — revise your work.' : '✅ Low similarity — likely original.'}
+      </div>`;
+    }
+  </script>
+</body>
+</html>
