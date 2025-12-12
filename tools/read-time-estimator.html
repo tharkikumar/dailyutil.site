@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Read Time Estimator — DailyUtil</title>
+  <meta name="description" content="Estimate reading time for any text. Free, private, no tracking.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-clock"></i> Read Time Estimator</h1>
+      <p>Estimate how long it will take to read your article, blog post, or document.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="readText">Text to Analyze</label>
+      <textarea id="readText" class="form-control" placeholder="Paste your article, blog post, or document here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="estimateReadTime()">Estimate Read Time</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function estimateReadTime() {
+      const text = document.getElementById('readText').value;
+      const words = text.trim().split(/\s+/).filter(w => w).length;
+      const result = document.getElementById('result');
+      if (words > 0) {
+        const mins = Math.ceil(words / 200);
+        result.innerHTML = `<div class="result-box success">${words} words · Estimated read time: <strong>~${mins} minute${mins !== 1 ? 's' : ''}</strong></div>`;
+      } else {
+        result.innerHTML = `<div class="result-box error">⚠️ Please enter some text.</div>`;
+      }
+    }
+  </script>
+</body>
+</html>
