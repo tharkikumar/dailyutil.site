@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oven Temperature Converter — °F to °C | DailyUtil</title>
+  <meta name="description" content="Convert oven temperatures between Fahrenheit, Celsius, and Gas Mark. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-fire"></i> Oven Temperature Converter</h1>
+      <p>Convert between Fahrenheit, Celsius, and Gas Mark for perfect baking and roasting.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="ovenTemp">Temperature</label>
+      <input type="number" id="ovenTemp" class="form-control" value="350" min="-100" max="600">
+    </div>
+    <div class="form-group">
+      <label>From</label>
+      <select id="ovenFrom" class="form-control">
+        <option value="F">°F (Fahrenheit)</option>
+        <option value="C">°C (Celsius)</option>
+        <option value="G">Gas Mark</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>To</label>
+      <select id="ovenTo" class="form-control">
+        <option value="C">°C (Celsius)</option>
+        <option value="F">°F (Fahrenheit)</option>
+        <option value="G">Gas Mark</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertOven()">Convert</button>
+    <div id="ovenResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Bake with Confidence, Every Time</h3>
+      <p>Oven temperature errors are a leading cause of baking fails — sunken cakes, burnt cookies, or undercooked roasts. DailyUtil’s Oven Temperature Converter gives you instant, accurate conversions between Fahrenheit, Celsius, and British Gas Mark scales, so you can follow any recipe worldwide with confidence.</p>
+      <p>Whether you're using a US cookbook (°F), a European recipe (°C), or a British classic (Gas Mark), this tool ensures your oven is set correctly. All calculations happen locally in your browser — no data is stored or shared, making it safe for your secret family recipes.</p>
+      <p>Free and ad-light, this converter requires no sign-up. Premium users get a "Baking Assistant" that adds preheat time estimates and visual doneness guides (e.g., "golden brown = 22 minutes") — because perfect results should be simple.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function convertOven() {
+      const temp = parseFloat(document.getElementById('ovenTemp').value);
+      const from = document.getElementById('ovenFrom').value;
+      const to = document.getElementById('ovenTo').value;
+      const result = document.getElementById('ovenResult');
+      
+      if (isNaN(temp)) { result.innerHTML = `<div class="result-box error">⚠️ Enter a valid number</div>`; return; }
+      
+      let celsius = temp;
+      if (from === 'F') celsius = (temp - 32) * 5/9;
+      else if (from === 'G') celsius = (temp * 14) + 121;
+      
+      let output;
+      if (to === 'F') output = (celsius * 9/5) + 32;
+      else if (to === 'G') output = Math.round((celsius - 121) / 14);
+      else output = celsius;
+      
+      const fromLabel = from === 'F' ? '°F' : from === 'C' ? '°C' : 'Gas Mark';
+      const toLabel = to === 'F' ? '°F' : to === 'C' ? '°C' : 'Gas Mark';
+      result.innerHTML = `<div class="result-box success"><strong>${temp} ${fromLabel}</strong> = <strong>${output.toFixed(1)} ${toLabel}</strong></div>`;
+    }
+  </script>
+</body>
+</html>
