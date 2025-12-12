@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Contrast Checker — DailyUtil</title>
+  <meta name="description" content="Check accessibility of text/background colors for WCAG compliance. Free tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-adjust"></i> Color Contrast Checker</h1>
+      <p>Check if your text and background colors meet WCAG accessibility standards.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="textColor">Text Color</label>
+      <input type="color" id="textColor" class="form-control" value="#000000">
+    </div>
+    <div class="form-group">
+      <label for="bgColor">Background Color</label>
+      <input type="color" id="bgColor" class="form-control" value="#ffffff">
+    </div>
+
+    <button class="btn" onclick="checkContrast()">Check Contrast</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function getLuminance(hex) {
+      const r = parseInt(hex.slice(1, 3), 16) / 255;
+      const g = parseInt(hex.slice(3, 5), 16) / 255;
+      const b = parseInt(hex.slice(5, 7), 16) / 255;
+      const a = [r, g, b].map(c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+      return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+    }
+
+    function checkContrast() {
+      const text = document.getElementById('textColor').value;
+      const bg = document.getElementById('bgColor').value;
+      const l1 = getLuminance(text);
+      const l2 = getLuminance(bg);
+      const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+      const result = document.getElementById('result');
+      const passAA = ratio >= 4.5;
+      const passAAA = ratio >= 7;
+      let message = '';
+      if (passAAA) message = '✅ Passes WCAG AAA (enhanced accessibility)';
+      else if (passAA) message = '✅ Passes WCAG AA (standard accessibility)';
+      else message = '⚠️ Fails accessibility standards — consider adjusting colors';
+      result.innerHTML = `
+        <div class="result-box" style="text-align:center;">
+          <div style="padding:16px; background:${bg}; color:${text}; display:inline-block; margin:10px 0; border-radius:6px; font-weight:bold; font-size:1.2rem;">
+            Sample Text
+          </div><br>
+          Contrast Ratio: <strong>${ratio.toFixed(2)}:1</strong><br>
+          ${message}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
