@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Planner — DailyUtil</title>
+  <meta name="description" content="Create a daily study plan before exams. Free student productivity tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-calendar-day"></i> Study Planner</h1>
+      <p>Create a daily study plan to finish before your exam date.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="topicsTotal">Total Topics to Study</label>
+      <input type="number" id="topicsTotal" class="form-control" value="30" min="1">
+    </div>
+    <div class="form-group">
+      <label for="examDate">Exam Date</label>
+      <input type="date" id="examDate" class="form-control">
+    </div>
+
+    <button class="btn" onclick="planStudy()">Create Study Plan</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function planStudy() {
+      const topics = parseInt(document.getElementById('topicsTotal').value);
+      const examDate = document.getElementById('examDate').value;
+      const r = document.getElementById('result');
+      if (!examDate || topics <= 0) { r.innerHTML = `<div class="result-box error">⚠️ Please enter valid data.</div>`; return; }
+      const today = new Date();
+      const exam = new Date(examDate);
+      const days = Math.ceil((exam - today) / (1000 * 60 * 60 * 24));
+      if (days <= 0) { 
+        r.innerHTML = `<div class="result-box error">⚠️ Exam date must be in the future.</div>`; 
+        return; 
+      }
+      const perDay = Math.ceil(topics / days);
+      r.innerHTML = `<div class="result-box success">
+        📚 Study Plan:<br>
+        Total topics: <strong>${topics}</strong><br>
+        Days until exam: <strong>${days}</strong><br>
+        Study <strong>${perDay} topics per day</strong> to finish on time.
+      </div>`;
+    }
+  </script>
+</body>
+</html>
