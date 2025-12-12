@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paint Coverage Calculator — m² to Liters | DailyUtil</title>
+  <meta name="description" content="Calculate how much paint you need for a room. Free, private, no login.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-paint-roller"></i> Paint Coverage Calculator</h1>
+      <p>Calculate how much paint you need for your walls — in liters or gallons.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="wallArea">Total Wall Area (m² or ft²)</label>
+      <input type="number" id="wallArea" class="form-control" value="50" min="1">
+    </div>
+    <div class="form-group">
+      <label>Unit</label>
+      <select id="areaUnit" class="form-control">
+        <option value="metric">Square Meters (m²)</option>
+        <option value="imperial">Square Feet (ft²)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="coats">Number of Coats</label>
+      <input type="number" id="coats" class="form-control" value="2" min="1" max="4">
+    </div>
+
+    <button class="btn" onclick="calculatePaint()">Calculate Paint Needed</button>
+    <div id="paintResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Paint Like a Pro — Without the Waste</h3>
+      <p>Buying too much paint wastes money; too little means extra trips to the store. DailyUtil’s Paint Coverage Calculator uses standard coverage rates (10m² per liter) to tell you exactly how much paint you need for your project — based on wall area and number of coats.</p>
+      <p>Enter your total wall area (length × height × walls), select metric or imperial, and choose coats. Get instant results in liters or gallons. All calculations happen in your browser — no room dimensions are saved or shared, making it safe for your renovation plans.</p>
+      <p>Free and ad-light, this tool works instantly. Premium users unlock a "Paint Planner" that recommends brands based on your location and saves your color palette — because great results start with the right prep.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function calculatePaint() {
+      const area = parseFloat(document.getElementById('wallArea').value);
+      const unit = document.getElementById('areaUnit').value;
+      const coats = parseInt(document.getElementById('coats').value);
+      const result = document.getElementById('paintResult');
+      
+      if (isNaN(area) || coats < 1) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter valid numbers</div>`;
+        return;
+      }
+      
+      let sqm = area;
+      if (unit === 'imperial') sqm = area * 0.092903; // ft² to m²
+      
+      const liters = (sqm / 10) * coats; // 10m² per liter
+      const gallons = liters / 3.785;
+      result.innerHTML = `<div class="result-box success">
+        You need <strong>${liters.toFixed(1)} liters</strong> (${gallons.toFixed(1)} gallons) of paint.
+      </div>`;
+    }
+  </script>
+</body>
+</html>
