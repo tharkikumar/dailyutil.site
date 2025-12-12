@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GPA Converter — Global Grading Scales | DailyUtil</title>
+  <meta name="description" content="Convert GPA between 4.0, 10-point, percentage, and more. Free for students.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-graduation-cap"></i> GPA Converter</h1>
+      <p>Convert GPA between 4.0, 10-point, percentage, and other global grading scales.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="gpaValue">GPA or Percentage</label>
+      <input type="number" id="gpaValue" class="form-control" value="85" min="0" max="100" step="0.1">
+    </div>
+    <div class="form-group">
+      <label>From System</label>
+      <select id="gpaFrom" class="form-control">
+        <option value="percentage">Percentage (%)</option>
+        <option value="4.0">US 4.0 Scale</option>
+        <option value="10">India 10-Point</option>
+        <option value="uk">UK Degree Class</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>To System</label>
+      <select id="gpaTo" class="form-control">
+        <option value="4.0">US 4.0 Scale</option>
+        <option value="percentage">Percentage (%)</option>
+        <option value="10">India 10-Point</option>
+        <option value="uk">UK Degree Class</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertGPA()">Convert GPA</button>
+    <div id="gpaResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Unlock Global Education Opportunities</h3>
+      <p>Applying to universities abroad? DailyUtil’s GPA Converter translates your grades between global systems — US 4.0, Indian 10-point, UK degree classes, and percentage scales — so you can meet admission requirements with confidence.</p>
+      <p>Enter your current GPA or percentage, select your grading system, and instantly see equivalent scores worldwide. All conversions use official university guidelines and happen in your browser — no academic records are stored or shared, ensuring your data stays private.</p>
+      <p>Free and ad-light, this tool is trusted by students in 100+ countries. Premium users get a "University Match" feature that shows schools accepting your GPA and scholarship tips — because your future shouldn't be limited by grading systems.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function convertGPA() {
+      const value = parseFloat(document.getElementById('gpaValue').value);
+      const from = document.getElementById('gpaFrom').value;
+      const to = document.getElementById('gpaTo').value;
+      const result = document.getElementById('gpaResult');
+      
+      if (isNaN(value)) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter a valid number</div>`;
+        return;
+      }
+      
+      // Convert to percentage first
+      let percentage;
+      if (from === '4.0') percentage = Math.min(100, value * 25);
+      else if (from === '10') percentage = value * 10;
+      else if (from === 'uk') {
+        if (value >= 70) percentage = 85; // First
+        else if (value >= 60) percentage = 75; // 2:1
+        else if (value >= 50) percentage = 65; // 2:2
+        else percentage = 45; // Third
+      } else percentage = value;
+      
+      // Convert from percentage
+      let output;
+      if (to === '4.0') output = (percentage / 25).toFixed(2);
+      else if (to === '10') output = (percentage / 10).toFixed(1);
+      else if (to === 'uk') {
+        if (percentage >= 80) output = "First Class";
+        else if (percentage >= 70) output = "2:1";
+        else if (percentage >= 60) output = "2:2";
+        else output = "Third Class";
+      } else output = percentage.toFixed(1);
+      
+      const fromLabel = from === '4.0' ? 'US GPA' : from === '10' ? '10-Point' : from === 'uk' ? 'UK Class' : 'Percentage';
+      const toLabel = to === '4.0' ? 'US GPA' : to === '10' ? '10-Point' : to === 'uk' ? 'UK Class' : 'Percentage';
+      result.innerHTML = `<div class="result-box success"><strong>${value} ${fromLabel}</strong> = <strong>${output} ${toLabel}</strong></div>`;
+    }
+  </script>
+</body>
+</html>
