@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Word Counter & Readability — DailyUtil</title>
+  <meta name="description" content="Count words, characters, and readability score. Free writing tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-font"></i> Word Counter & Readability</h1>
+      <p>Analyze your text for word count, character count, and readability score.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="wcText">Text to Analyze</label>
+      <textarea id="wcText" class="form-control" placeholder="Paste your essay, article, or report here..."></textarea>
+    </div>
+
+    <button class="btn" onclick="countWords()">Analyze Text</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function countWords() {
+      const text = document.getElementById('wcText').value;
+      if (!text.trim()) {
+        document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Please enter some text to analyze.</div>`;
+        return;
+      }
+      const words = text.trim().split(/\s+/).filter(w => w).length;
+      const chars = text.replace(/\s+/g, '').length;
+      const readability = Math.max(0, Math.min(100, 206.835 - 1.015 * words - 84.6 * (chars/words)));
+      document.getElementById('result').innerHTML = `
+        <div class="result-box success">
+          <h3>Text Analysis Results:</h3>
+          <ul style="text-align:left; margin-top:12px; padding-left:20px;">
+            <li><strong>Words:</strong> ${words}</li>
+            <li><strong>Characters (no spaces):</strong> ${chars}</li>
+            <li><strong>Readability Score:</strong> ${readability.toFixed(1)}/100 
+              ${readability > 60 ? '(Easy to read)' : readability > 30 ? '(Average)' : '(Difficult)'}
+            </li>
+          </ul>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
