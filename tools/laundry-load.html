@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Laundry Load Converter — kg to Items | DailyUtil</title>
+  <meta name="description" content="Convert washing machine capacity (kg) to number of clothes. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-tshirt"></i> Laundry Load Converter</h1>
+      <p>Convert your washing machine capacity (kg) to number of clothes — avoid overloading.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="machineKg">Machine Capacity (kg)</label>
+      <input type="number" id="machineKg" class="form-control" value="7" min="1" max="15">
+    </div>
+    <div class="form-group">
+      <label>Clothing Type</label>
+      <select id="clothingType" class="form-control">
+        <option value="shirt">T-Shirt</option>
+        <option value="jeans">Jeans</option>
+        <option value="towel">Bath Towel</option>
+        <option value="socks">Socks (pair)</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertLaundry()">Calculate Load</button>
+    <div id="laundryResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Laundry Without the Guesswork</h3>
+      <p>Overloading your washing machine causes poor cleaning, excess wear, and even breakdowns. Underloading wastes water, energy, and time. DailyUtil’s Laundry Load Converter uses average clothing weights to tell you exactly how many items fit in your machine — so you get clean clothes and a longer-lasting washer.</p>
+      <p>Just select your machine capacity (e.g., 7kg) and clothing type — and get an instant count. All processing happens locally in your browser; no laundry data is saved or shared. This makes it safe for everyday use, whether you're a college student or a busy parent.</p>
+      <p>Free and private, this tool requires no sign-up. Premium users unlock a "Laundry Planner" that suggests detergent amounts and eco-friendly cycles — because doing laundry should be efficient, not frustrating.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const weights = {
+      shirt: 0.2,    // kg per item
+      jeans: 0.5,
+      towel: 0.6,
+      socks: 0.1
+    };
+
+    function convertLaundry() {
+      const kg = parseFloat(document.getElementById('machineKg').value);
+      const type = document.getElementById('clothingType').value;
+      const result = document.getElementById('laundryResult');
+      
+      if (isNaN(kg)) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter valid capacity</div>`;
+        return;
+      }
+      
+      const count = Math.floor(kg / weights[type]);
+      const item = type === 'socks' ? 'pairs' : 'items';
+      result.innerHTML = `<div class="result-box success">Your ${kg}kg machine holds <strong>${count} ${item}</strong> of this type.</div>`;
+    }
+  </script>
+</body>
+</html>
