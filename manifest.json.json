@@ -1,11 +1,11 @@
 {
   "name": "DailyUtil",
   "short_name": "DailyUtil",
-  "description": "25+ free daily tools for work, privacy, study & health.",
+  "description": "25 free daily tools: PDF converter, password checker, QR generator & more.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f9fafb",
-  "theme_color": "#4a6cf7",
+  "background_color": "#fafbff",
+  "theme_color": "#4361ee",
   "icons": [
     {
       "src": "/icon-192.png",
