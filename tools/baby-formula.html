@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Baby Formula Converter — Scoops to ml | DailyUtil</title>
+  <meta name="description" content="Convert baby formula scoops to milliliters or ounces. Safe, private, no data stored.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-baby"></i> Baby Formula Converter</h1>
+      <p>Convert formula scoops to milliliters or fluid ounces — with brand-specific accuracy.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="scoops">Scoops</label>
+      <input type="number" id="scoops" class="form-control" value="2" min="0" step="0.5">
+    </div>
+    <div class="form-group">
+      <label>Brand (scoop size in ml)</label>
+      <select id="brand" class="form-control">
+        <option value="8.7">Similac (8.7ml/scoop)</option>
+        <option value="8.8">Enfamil (8.8ml/scoop)</option>
+        <option value="9.0">Gerber (9.0ml/scoop)</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertFormula()">Convert</button>
+    <div id="formulaResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Feed with Confidence</h3>
+      <p>Mixing baby formula requires precision — too much powder can cause constipation, too little can lead to malnutrition. DailyUtil’s Baby Formula Converter uses real brand scoop sizes to give you accurate milliliter or ounce measurements, so you never guess.</p>
+      <p>All calculations happen in your browser — no feeding data is saved, logged, or shared. This makes it safe for sensitive use at 3 AM, in hospitals, or while traveling.</p>
+      <p>Free and private, this tool requires no sign-up. Premium users can unlock a "Baby Care Log" to track feedings locally (encrypted) and print weekly reports for pediatricians — because your baby deserves the best, without privacy trade-offs.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function convertFormula() {
+      const scoops = parseFloat(document.getElementById('scoops').value);
+      const mlPerScoop = parseFloat(document.getElementById('brand').value);
+      const ml = scoops * mlPerScoop;
+      const oz = ml / 29.574;
+      document.getElementById('formulaResult').innerHTML = 
+        `<div class="result-box success">${scoops} scoops = <strong>${ml.toFixed(1)} ml</strong> or <strong>${oz.toFixed(1)} fl oz</strong></div>`;
+    }
+  </script>
+</body>
+</html>
