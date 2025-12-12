@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Is This Website Down? — DailyUtil</title>
+  <meta name="description" content="Check if a website is down for everyone or just you. Fast, private, no tracking.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-signal"></i> Is This Website Down?</h1>
+      <p>Check if a site is down for everyone or just you — no data leaves your browser.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="urlInput">Website URL</label>
+      <input type="text" id="urlInput" class="form-control" placeholder="e.g., google.com" value="google.com">
+    </div>
+
+    <button class="btn" onclick="checkSiteStatus()">Check Status</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    function checkSiteStatus() {
+      const input = document.getElementById('urlInput').value.trim();
+      const resultDiv = document.getElementById('result');
+      if (!input) { 
+        resultDiv.innerHTML = `<div class="result-box error">⚠️ Please enter a website URL</div>`; 
+        return; 
+      }
+      let url = input.match(/^https?:\/\//) ? input : 'https://' + input;
+      resultDiv.innerHTML = '<div class="result-box">🔍 Checking website status...</div>';
+      fetch(url, { mode: 'no-cors' })
+        .then(() => resultDiv.innerHTML = `<div class="result-box success">✅ <strong>${input}</strong> is UP and running!</div>`)
+        .catch(() => {
+          const img = new Image();
+          img.onload = () => resultDiv.innerHTML = `<div class="result-box success">✅ <strong>${input}</strong> appears to be UP.</div>`;
+          img.onerror = () => resultDiv.innerHTML = `<div class="result-box error">❌ <strong>${input}</strong> may be DOWN or unreachable.</div>`;
+          img.src = url + '/favicon.ico?' + Date.now();
+        });
+    }
+  </script>
+</body>
+</html>
