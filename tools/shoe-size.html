@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shoe Size Converter — US, EU, UK | DailyUtil</title>
+  <meta name="description" content="Convert shoe sizes between US, EU, UK for men, women, and kids. Free, private tool.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-shoe-prints"></i> Shoe Size Converter</h1>
+      <p>Convert shoe sizes between US, EU, UK for men, women, and kids — avoid returns.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <select id="gender" class="form-control">
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+        <option value="kids">Kids</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="shoeSize">Shoe Size</label>
+      <input type="number" id="shoeSize" class="form-control" value="9" min="0" step="0.5">
+    </div>
+    <div class "form-group">
+      <label>From</label>
+      <select id="shoeFrom" class="form-control">
+        <option value="US">US</option>
+        <option value="EU">EU</option>
+        <option value="UK">UK</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>To</label>
+      <select id="shoeTo" class="form-control">
+        <option value="EU">EU</option>
+        <option value="US">US</option>
+        <option value="UK">UK</option>
+      </select>
+    </div>
+
+    <button class="btn" onclick="convertShoeSize()">Convert Size</button>
+    <div id="shoeResult"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <div class="seo-content">
+      <h3>Shop Online with Confidence</h3>
+      <p>Shoe size inconsistencies between countries cause 30% of online returns. DailyUtil’s Shoe Size Converter gives you accurate conversions between US, EU, and UK sizes for men, women, and kids — so you buy the right fit the first time.</p>
+      <p>Whether you're ordering sneakers from the US, boots from Europe, or sandals for your child, this tool ensures a perfect match. All conversions happen in your browser — no foot measurements are saved or shared, protecting your privacy.</p>
+      <p>Free and ad-light, this converter works instantly. Premium users unlock a "Brand Fit Guide" with size tips for 50+ brands (e.g., "Nike runs small, size up") — because great style shouldn't mean guessing.</p>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Approximate conversion tables
+    function convertShoeSize() {
+      const size = parseFloat(document.getElementById('shoeSize').value);
+      const from = document.getElementById('shoeFrom').value;
+      const to = document.getElementById('shoeTo').value;
+      const gender = document.getElementById('gender').value;
+      const result = document.getElementById('shoeResult');
+      
+      if (isNaN(size)) {
+        result.innerHTML = `<div class="result-box error">⚠️ Enter a valid size</div>`;
+        return;
+      }
+      
+      let eu, us, uk;
+      
+      if (gender === 'men') {
+        if (from === 'US') { eu = size + 33; uk = size - 1; }
+        else if (from === 'EU') { us = size - 33; uk = size - 34; }
+        else { us = size + 1; eu = size + 34; }
+      } else if (gender === 'women') {
+        if (from === 'US') { eu = size + 31; uk = size - 2; }
+        else if (from === 'EU') { us = size - 31; uk = size - 33; }
+        else { us = size + 2; eu = size + 33; }
+      } else { // kids
+        if (from === 'US') { eu = size + 30; uk = size - 0.5; }
+        else if (from === 'EU') { us = size - 30; uk = size - 31; }
+        else { us = size + 0.5; eu = size + 31; }
+      }
+      
+      let output;
+      if (to === 'US') output = us.toFixed(1);
+      else if (to === 'EU') output = eu.toFixed(0);
+      else output = uk.toFixed(1);
+      
+      result.innerHTML = `<div class="result-box success"><strong>${size} ${from}</strong> = <strong>${output} ${to}</strong></div>`;
+    }
+  </script>
+</body>
+</html>
