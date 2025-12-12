@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code Generator — DailyUtil</title>
+  <meta name="description" content="Generate QR codes with no watermark. Free, private, client-side.">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <main class="container">
+    <div class="tool-header">
+      <h1><i class="fas fa-qrcode"></i> QR Code Generator</h1>
+      <p>Create QR codes for URLs, text, WiFi, and more — with no watermark.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="qrText">Text to Encode</label>
+      <input type="text" id="qrText" class="form-control" value="https://dailyutil.site" placeholder="URL, contact info, WiFi password, etc.">
+    </div>
+
+    <button class="btn" onclick="generateQR()">Generate QR Code</button>
+
+    <div id="result"></div>
+
+    <div class="adsense-placeholder">
+      [AdSense Ad Unit]
+    </div>
+
+    <p style="margin-top:16px; font-size:0.9rem; color:#666;">✅ No watermark. Right-click the image to save it.</p>
+
+    <p style="text-align:center; margin-top:20px;">
+      <a href="/" class="btn" style="background:#6c757d;">← Back to All Tools</a>
+    </p>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 DailyUtil.site — Free tools. Zero tracking.</p>
+      <p><a href="/privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+
+  <script>
+    async function generateQR() {
+      const text = document.getElementById('qrText').value;
+      if (!text.trim()) { 
+        document.getElementById('result').innerHTML = `<div class="result-box error">⚠️ Please enter text to encode.</div>`; 
+        return; 
+      }
+      const result = document.getElementById('result');
+      result.innerHTML = '<div class="result-box">Generating QR code...</div>';
+
+      if (!window.qrcode) {
+        await loadScript('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js');
+      }
+
+      const qr = qrcode(0, 'M');
+      qr.addData(text);
+      qr.make();
+      result.innerHTML = `
+        <div class="result-box success" style="text-align:center;">
+          <h3>Your QR Code:</h3>
+          ${qr.createImgTag(8, 16)}
+        </div>
+      `;
+    }
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+  </script>
+</body>
+</html>
