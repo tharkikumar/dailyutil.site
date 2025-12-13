@@ -8,6 +8,9 @@
   --light-gray: #e9ecef;
   --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
   --border-radius: 12px;
+  --accent: #8b5cf6; /* soft purple for "Home & Life" */
+--success: #10b981; /* green for positive results */
+--warning: #f59e0b; /* amber for warnings */
 }
 
 * {
@@ -342,4 +345,11 @@ footer a {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
   .hero h1 { font-size: 2.2rem; }
+}
+.result-box.success {
+  border-left-color: var(--success);
+}
+
+.result-box.error {
+  border-left-color: var(--warning);
 }
