@@ -22,7 +22,17 @@ body {
   color: var(--dark);
   line-height: 1.6;
 }
+body {
+  background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
+  background-attachment: fixed; /* creates parallax-like effect */
+}
 
+.hero {
+  background: rgba(255, 255, 255, 0.85); /* slight transparency */
+  backdrop-filter: blur(4px); /* frosted glass effect (modern browsers) */
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
