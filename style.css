@@ -21,10 +21,12 @@ body {
   background-color: #fafbff;
   color: var(--dark);
   line-height: 1.6;
+ font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 body {
   background: linear-gradient(135deg, #f5f7ff 0%, #e6e9ff 100%);
   background-attachment: fixed; /* creates parallax-like effect */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .hero {
