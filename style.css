@@ -273,19 +273,20 @@ body {
 }
 
 .btn {
-  background: var(--primary);
-  color: white;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
   border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
+  color: white;
   font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
 }
 
 .btn:hover {
-  background: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(67, 97, 238, 0.3);
 }
 
 .result-box {
