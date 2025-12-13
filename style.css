@@ -237,6 +237,10 @@ body {
 }
 
 .tool-icon {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   font-size: 28px;
   margin-bottom: 12px;
 }
